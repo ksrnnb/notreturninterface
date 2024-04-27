@@ -4,6 +4,7 @@ import (
 	"go/ast"
 	"go/types"
 
+	"github.com/gostaticanalysis/analysisutil"
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/analysis/passes/inspect"
 	"golang.org/x/tools/go/ast/inspector"
@@ -27,7 +28,7 @@ func run(pass *analysis.Pass) (any, error) {
 	nodeFilter := []ast.Node{
 		(*ast.FuncDecl)(nil),
 	}
-
+	pass.Report = analysisutil.ReportWithoutIgnore(pass)
 	inspect.Preorder(nodeFilter, func(n ast.Node) {
 		switch n := n.(type) {
 		case *ast.FuncDecl:
