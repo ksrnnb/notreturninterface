@@ -32,6 +32,10 @@ func run(pass *analysis.Pass) (any, error) {
 	inspect.Preorder(nodeFilter, func(n ast.Node) {
 		switch n := n.(type) {
 		case *ast.FuncDecl:
+			if n.Type.Results == nil || n.Type.Results.List == nil {
+				return
+			}
+
 			for _, field := range n.Type.Results.List {
 				typeExpr := pass.TypesInfo.TypeOf(field.Type)
 

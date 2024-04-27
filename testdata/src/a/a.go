@@ -20,3 +20,7 @@ func h() Hoge {
 func x() error {
 	return nil
 }
+
+func y() {
+	return
+}
