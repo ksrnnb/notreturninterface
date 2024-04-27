@@ -35,11 +35,19 @@ func run(pass *analysis.Pass) (any, error) {
 			for _, field := range n.Type.Results.List {
 				typeExpr := pass.TypesInfo.TypeOf(field.Type)
 
-				if typeExpr != nil {
-					if _, ok := typeExpr.Underlying().(*types.Interface); ok {
-						pass.Reportf(n.Pos(), "function %s must not return interface %s, but struct", n.Name.Name, typeExpr)
-					}
+				if typeExpr == nil {
+					continue
 				}
+
+				if _, ok := typeExpr.Underlying().(*types.Interface); !ok {
+					continue
+				}
+
+				if typeExpr.String() == "error" {
+					continue
+				}
+
+				pass.Reportf(n.Pos(), "function %s must not return interface %s, but struct", n.Name.Name, typeExpr)
 			}
 		default:
 		}
