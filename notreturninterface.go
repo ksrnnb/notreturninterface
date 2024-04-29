@@ -23,7 +23,7 @@ var Analyzer = &analysis.Analyzer{
 	},
 }
 
-var ignoreInterfaces string
+var ignoreInterfaces string // -ignore flag
 
 func init() {
 	Analyzer.Flags.StringVar(&ignoreInterfaces, "ignore", "", "comma-separated list of interfaces to ignore")
