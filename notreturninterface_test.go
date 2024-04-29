@@ -8,6 +8,10 @@ import (
 	"golang.org/x/tools/go/analysis/analysistest"
 )
 
+func init() {
+	notreturninterface.Analyzer.Flags.Set("ignore", "any")
+}
+
 // TestAnalyzer is a test for Analyzer.
 func TestAnalyzer(t *testing.T) {
 	testdata := testutil.WithModules(t, analysistest.TestData(), nil)

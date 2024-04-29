@@ -24,3 +24,7 @@ func x() error {
 func y() {
 	return
 }
+
+func z() any {
+	return nil
+}
