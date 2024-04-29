@@ -7,7 +7,7 @@
 You can install `notreturninterface` by `go install` command.
 
 ```bash
-$ go install github.com/ksrnnb/notreturninterface/cmd/notreturninterface@latest
+go install github.com/ksrnnb/notreturninterface/cmd/notreturninterface@latest
 ```
 
 ## How to use
@@ -15,7 +15,10 @@ $ go install github.com/ksrnnb/notreturninterface/cmd/notreturninterface@latest
 You can run `notreturninterface` by `go vet` command.
 
 ```bash
-$ go vet -vettool=$(which notreturninterface) ./...
+go vet -vettool=$(which notreturninterface) ./...
+
+# When you want to ignore some interfaces, you can pass them separated by comma
+go vet -vettool=$(which notreturninterface) -notreturninterface.ignore=any,someInterface ./...
 ```
 
 ## Example
