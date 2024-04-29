@@ -7,7 +7,7 @@
 You can install `notreturninterface` by `go install` command.
 
 ```bash
-go install github.com/ksrnnb/notreturninterface/cmd/notreturninterface@latest
+go install github.com/ksrnnb/notreturninterface/cmd/notreturninterface@v1.0.0
 ```
 
 ## How to use
