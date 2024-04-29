@@ -3,6 +3,7 @@ package notreturninterface
 import (
 	"go/ast"
 	"go/types"
+	"strings"
 
 	"github.com/gostaticanalysis/analysisutil"
 	"golang.org/x/tools/go/analysis"
@@ -22,7 +23,20 @@ var Analyzer = &analysis.Analyzer{
 	},
 }
 
+var ignoreInterfaces string
+
+func init() {
+	Analyzer.Flags.StringVar(&ignoreInterfaces, "ignore", "", "comma-separated list of interfaces to ignore")
+}
+
 func run(pass *analysis.Pass) (any, error) {
+	ignoreInterfacesSet := make(map[string]struct{})
+	for _, ignoreInterface := range strings.Split(strings.TrimSpace(ignoreInterfaces), ",") {
+		if ignoreInterface != "" {
+			ignoreInterfacesSet[ignoreInterface] = struct{}{}
+		}
+	}
+
 	inspect := pass.ResultOf[inspect.Analyzer].(*inspector.Inspector)
 
 	nodeFilter := []ast.Node{
@@ -48,6 +62,10 @@ func run(pass *analysis.Pass) (any, error) {
 				}
 
 				if typeExpr.String() == "error" {
+					continue
+				}
+
+				if _, ok := ignoreInterfacesSet[typeExpr.String()]; ok {
 					continue
 				}
 
