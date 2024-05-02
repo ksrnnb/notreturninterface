@@ -1,5 +1,7 @@
 package a
 
+import "context"
+
 type Hoge interface{}
 
 type Foo struct{}
@@ -27,4 +29,8 @@ func y() {
 
 func z() any {
 	return nil
+}
+
+func returnContext() context.Context {
+	return context.Background()
 }
