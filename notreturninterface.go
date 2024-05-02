@@ -3,6 +3,7 @@ package notreturninterface
 import (
 	"go/ast"
 	"go/types"
+	"slices"
 	"strings"
 
 	"github.com/gostaticanalysis/analysisutil"
@@ -24,6 +25,8 @@ var Analyzer = &analysis.Analyzer{
 }
 
 var ignoreInterfaces string // -ignore flag
+
+var allowList = []string{"error", "context.Context"}
 
 func init() {
 	Analyzer.Flags.StringVar(&ignoreInterfaces, "ignore", "", "comma-separated list of interfaces to ignore")
@@ -61,7 +64,7 @@ func run(pass *analysis.Pass) (any, error) {
 					continue
 				}
 
-				if typeExpr.String() == "error" {
+				if slices.Contains(allowList, typeExpr.String()) {
 					continue
 				}
 
