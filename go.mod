@@ -1,6 +1,6 @@
 module github.com/ksrnnb/notreturninterface
 
-go 1.22.2
+go 1.22.1
 
 require (
 	github.com/gostaticanalysis/analysisutil v0.7.1
